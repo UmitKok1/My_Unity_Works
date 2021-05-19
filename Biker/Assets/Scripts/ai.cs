@@ -33,13 +33,24 @@ public class ai : MonoBehaviour
         //    Debug.Log(pathTransforms[i].position);
 
         //}
-        GetComponent<NavMeshAgent>().destination = target.position;
+        if (gameObject.GetComponent<NavMeshAgent>().enabled == true)
+        {
+            GetComponent<NavMeshAgent>().destination = target.position;
+        }
+        
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag=="bullet")
         {
-            Destroy(this.gameObject);
+            this.gameObject.GetComponent<NavMeshAgent>().speed = 0;
+            if (gameObject.GetComponent<NavMeshAgent>().enabled == true)
+            {
+                gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            }
+            
+            gameObject.transform.Rotate(0,0,80);
+            
         }
     }
 }
