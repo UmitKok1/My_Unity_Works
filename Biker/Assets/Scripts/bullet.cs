@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class bullet : MonoBehaviour
 {
     public float bulletSpeed;
@@ -11,7 +11,6 @@ public class bullet : MonoBehaviour
         rb = FindObjectOfType<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         rb.velocity = transform.forward * bulletSpeed;
@@ -19,7 +18,11 @@ public class bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag=="bot")
+        if (other.tag == "bot" && other.GetComponent<NavMeshAgent>().enabled == true)
+        {
+            Destroy(this.gameObject);
+        }
+        if (other.tag=="wall")
         {
             Destroy(this.gameObject);
         }
